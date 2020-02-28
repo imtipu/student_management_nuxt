@@ -11,7 +11,7 @@
       app
 
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; {{ new Date().getFullYear() }} {{ api_url }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -27,6 +27,7 @@
     data() {
       return {
         fixed: false,
+        api_url: process.env.API_URL,
       }
     }
   }
