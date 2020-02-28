@@ -1,3 +1,4 @@
+require('dotenv').config();
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -6,7 +7,6 @@ export default {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -30,12 +30,16 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // 'nuxt-moment',
+    '~/plugins/vue-moment',
+    // { src: '~/plugins/feather-icon.js', ssr: false },
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -44,6 +48,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/auth',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
   ],
@@ -60,7 +65,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -71,7 +76,8 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
         }
-      }
+      },
+      light: false,
     }
   },
   /*
@@ -83,5 +89,37 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: process.env.API_URL + '/login/token/',
+            method: 'post',
+            propertyName: 'token'
+          },
+          refresh: {
+            url: process.env.API_URL + '/login/token/refresh/',
+            method: 'post',
+            propertyName: 'token'
+          },
+          user: {
+            url: process.env.API_URL + '/user/profile/',
+            method: 'get',
+            propertyName: 'user'
+          },
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
+      }
+    },
+    redirect: {
+      login: '/account/login',
+      logout: '/account/login',
+      callback: '/account/login',
+      home: '/'
+    }
+
   }
 }

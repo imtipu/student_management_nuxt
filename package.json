@@ -11,10 +11,17 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
+    "@nuxtjs/auth": "^4.8.5",
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "@nuxtjs/dotenv": "^1.4.0"
+    "axios": "^0.19.2",
+    "feather-icons": "^4.26.0",
+    "moment-timezone": "^0.5.28",
+    "nuxt": "^2.0.0",
+    "vue": "^2.6.11",
+    "vue-feather": "^1.0.0",
+    "vue-moment": "^4.1.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"
