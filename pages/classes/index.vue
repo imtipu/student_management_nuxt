@@ -34,7 +34,7 @@
     },
     data() {
       return {
-        url: 'http://127.0.0.1:8000/api/v1/classes/',
+        url: process.env.API_UR + '/classes/',
         columns: [
           {
             header: 'ID',
