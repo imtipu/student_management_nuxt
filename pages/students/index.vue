@@ -36,7 +36,7 @@
     },
     data() {
       return {
-        url: process.env.API_UR + '/students/',
+        url: process.env.API_URL + '/students/',
         columns: [
           {
             header: 'ID',

@@ -34,7 +34,7 @@
     },
     data() {
       return {
-        url: process.env.API_UR + '/classes/',
+        url: process.env.API_URL + '/classes/',
         columns: [
           {
             header: 'ID',
