@@ -21,13 +21,16 @@ export default {
   },
   head(){
     return{
-      title: 'Dashboard'
+      title: "Dashboard",
     }
   },
   data(){
     return{
 
     }
+  },
+  mounted(){
+    console.log('title: ' + process.env.API_URL)
   }
 }
 </script>

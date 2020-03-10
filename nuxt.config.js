@@ -1,12 +1,17 @@
 require('dotenv').config();
-import colors from 'vuetify/es5/util/colors'
-
 export default {
-  mode: 'ssr',
-  // mode: 'universal',
+  // mode: 'ssr',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
+  env: {
+    BASE_URL: process.env.BASE_URL || "",
+    API_URL: process.env.API_URL || "",
+    HOST: process.env.HOST || "",
+    NODE_ENV: process.env.NODE_ENV || "",
+    NPM_CONFIG_PRODUCTION: process.env.NPM_CONFIG_PRODUCTION || "",
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
