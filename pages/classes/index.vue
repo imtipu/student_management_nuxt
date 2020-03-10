@@ -1,25 +1,13 @@
 <template>
-  <v-card>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="headline" color="primary">Classes</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content v-if="this.$auth.user.is_superuser === true">
-        <custom_datatable :url="url" :columns="columns"/>
-      </v-list-item-content>
-      <v-alert v-else
-               border="right"
-               colored-border
-               type="error"
-               elevation="2"
-      >
+  <div class="card page">
+    <b-card-body title="Classes">
+      <custom_datatable :url="url" :columns="columns" v-if="this.$auth.user.is_superuser === true"/>
+      <div class="alert alert-warning" v-else>
         You don't have any permission to view this section.
-      </v-alert>
-    </v-list-item>
+      </div>
+    </b-card-body>
 
-  </v-card>
+  </div>
 </template>
 
 <script>

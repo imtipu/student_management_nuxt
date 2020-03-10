@@ -47,10 +47,16 @@
               </ul>
             </div>
           </li>
-          <li class="menu-item"><a class="menu-link">Link</a></li>
-          <li class="menu-item"><a class="menu-link">Link</a></li>
-          <li class="menu-item"><a class="menu-link">Link</a></li>
-
+          <li class="menu-item">
+            <a class="menu-link parent">Classes</a>
+            <div class="sub-menu">
+              <ul class="list-unstyled">
+                <li class="menu-item">
+                  <nuxt-link class="menu-link" to="/classes/">All</nuxt-link>
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
