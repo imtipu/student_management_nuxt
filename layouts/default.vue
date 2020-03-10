@@ -1,34 +1,30 @@
 <template>
-  <v-app class="elevation-1" light top-toolbar left-fixed-sidebar sidebar-under-toolbar>
+  <div id="default-layout">
     <NavLeftDrawer v-if="this.$auth.loggedIn"></NavLeftDrawer>
-    <v-content>
-      <v-container>
-        <nuxt/>
-      </v-container>
-    </v-content>
-    <v-footer
-      :fixed="fixed"
-      app
+    <div id="page-content-wrapper">
+      <nuxt/>
+    </div>
+  </div>
 
-    >
-      <span>&copy; {{ new Date().getFullYear() }} {{ api_url }}</span>
-    </v-footer>
-  </v-app>
 </template>
 
 <script>
   import NavSidebar from "../components/snippets/NavSidebar";
   import NavRightDrawer from "../components/snippets/NavRightDrawer";
   import NavLeftDrawer from "../components/snippets/NavLeftDrawer";
+  import TopBar from "../components/snippets/TopBar";
 
   export default {
     middleware: ['auth'],
-    components: {NavLeftDrawer, NavRightDrawer, NavSidebar},
+    components: {TopBar, NavLeftDrawer, NavRightDrawer, NavSidebar},
     data() {
       return {
-        fixed: false,
-        api_url: process.env.API_URL,
       }
+    },
+    mounted(){
+      document.body.classList.add('sidebar')
     }
   }
 </script>
+<style scoped lang="scss">
+</style>

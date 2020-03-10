@@ -1,148 +1,109 @@
 <template>
-  <div>
-    <v-app-bar
-      color="deep-purple accent-4"
-      dark
-      app
-    >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  <div id="navigation">
+    <nav id="top-bar" class="top-nav">
+      <nuxt-link class="nav-logo" to="/">Dashboard</nuxt-link>
+      <button class="btn-siddebar-toggle" @click="toggleSidebar"><i class="fas fa-bars"></i></button>
+      <div class="navbar-right float-right r-0">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/account/logout/">Logout</nuxt-link>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" @click="openAccountDropdown" href="#" aria-haspopup="true"
+               aria-expanded="false">
+              {{ this.$auth.user.username }}
+            </a>
+            <div class="dropdown-menu" ref="account_dropdown_menu" aria-labelledby="navbarDropdownMenuLink">
+              <nuxt-link class="dropdown-item" to="/account/profile/">Profile</nuxt-link>
+              <nuxt-link class="dropdown-item" to="/account/settings/">Settings</nuxt-link>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="sidebar-left" v-bind:class="{ toggled: sidebar}">
+      <div class="menu-list pt-3">
+        <ul class="list-unstyled">
+          <li class="menu-item">
+            <a class="menu-link parent accordion">Students</a>
+            <div class="sub-menu">
+              <ul class="list-unstyled">
+                <li class="menu-item">
+                  <nuxt-link class="menu-link" to="/students/">All</nuxt-link>
+                </li>
+                <li class="menu-item">
+                  <nuxt-link class="menu-link" to="/students/add/">Add</nuxt-link>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link parent accordion">Teachers</a>
+            <div class="sub-menu">
+              <ul class="list-unstyled">
+                <li class="menu-item">
+                  <nuxt-link class="menu-link" to="/teachers/">All</nuxt-link>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="menu-item"><a class="menu-link">Link</a></li>
+          <li class="menu-item"><a class="menu-link">Link</a></li>
+          <li class="menu-item"><a class="menu-link">Link</a></li>
 
-      <v-toolbar-title>
-        <span v-if="this.$auth.user">
-          {{ this.$auth.user.username }}
-        </span>
-        <span v-else>
-          Dashboard
-        </span>
-      </v-toolbar-title>
+        </ul>
+      </div>
+    </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn icon nuxt to="/account/logout/">
-        <v-text>Logout</v-text>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-menu
-        left
-        bottom
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      :color="color"
-      :src="bg"
-      fixed
-      dark
-      app
-      permanent
-    >
-      <v-list>
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
-          </v-list-item-avatar>
-        </v-list-item>
-
-        <v-list-item link to="/account/profile/">
-          <v-list-item-content>
-             <br>
-            <!--<v-btn x-small color="secondary" dark to="/account/profile/" v-if="drawer === true">Profile</v-btn>-->
-            <v-list-item-title class="title">{{ this.$auth.user.username }}</v-list-item-title>
-            <v-list-item-subtitle>{{ this.$auth.user.email }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list
-        dense
-        nav
-        class="py-0"
-      >
-
-        <v-divider></v-divider>
-
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
   </div>
+
+
 </template>
 
 <script>
+
   export default {
+    components: {},
     middleware: ['auth'],
     name: "NavLeftDrawer",
     data() {
       return {
-        drawer: true,
-        items: [
-          {
-            icon: 'mdi-apps',
-            title: 'Dashboard',
-            to: '/'
-          },
-          {
-            icon: 'mdi-chart-bubble',
-            title: 'Students',
-            to: '/students'
-          },
-          {
-            icon: 'mdi-chart-bubble',
-            title: 'Classes',
-            to: '/classes'
-          },
-          {
-            icon: 'mdi-chart-bubble',
-            title: 'Teachers',
-            to: '/teachers'
-          }
-        ],
-        color: 'primary',
-        colors: [
-          'primary',
-          'blue',
-          'success',
-          'red',
-          'teal',
-        ],
-        right: false,
-        miniVariant: false,
-        mini: true,
-        expandOnHover: true,
-        background: true,
+        sidebar: true,
       }
+    },
+    methods: {
+      toggleSidebar() {
+        this.sidebar = !this.sidebar;
+        let body = document.body;
+        if (this.sidebar === true) {
+          body.classList.add('sidebar')
+        } else {
+          body.classList.remove('sidebar')
+        }
+      },
+      // created: function () {
+      //   this.toggleSidebar();
+      // },
+      openSubmenu(e) {
+        e.preventDefault();
+        console.log(e.target.parentElement.children[1]);
+        e.target.parentElement.children[1].classList.toggle('show')
+      },
+      openAccountDropdown() {
+        this.$refs.account_dropdown_menu.classList.toggle('show');
+      }
+    },
+    mounted() {
+      const parents = document.querySelectorAll('.menu-link.parent');
+      for (const parent of parents){
+        parent.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.target.classList.toggle('open');
+          console.log(e.target.parentElement.children[1]);
+          e.target.parentElement.children[1].classList.toggle('show')
+        })
+      }
+
     },
     computed: {
       bg() {
@@ -151,7 +112,26 @@
     },
   }
 </script>
+<style scoped lang="scss">
+  #sidebar-wrapper.toggled {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    margin-left: 0;
+  }
 
-<style scoped>
+  #sidebar-wrapper {
+    /*display: none;*/
+    width: 250px;
+    max-width: 250px;
+    margin-left: -250px;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0;
+    -webkit-transition: 600ms all;
+    transition: 600ms all;
+
+  }
 
 </style>

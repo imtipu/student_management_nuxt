@@ -1,25 +1,27 @@
 <template>
-  <v-card>
-    <v-list-item>
-      <v-list-item-content>
-        <v-list-item-title class="headline" color="primary">Students</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item>
-      <v-list-item-content v-if="this.$auth.user.is_superuser === true">
-        <custom_datatable :url="url" :columns="columns"/>
-      </v-list-item-content>
-      <v-alert v-else
-               border="right"
-               colored-border
-               type="error"
-               elevation="2"
-      >
-        You don't have any permission to view this section.
-      </v-alert>
-    </v-list-item>
+  <div id="student-index" class="page">
+    <div class="card">
+      <div class="card-header">Students</div>
+      <div class="card-body">
 
-  </v-card>
+        <v-list-item>
+          <v-list-item-content v-if="this.$auth.user.is_superuser === true">
+            <custom_datatable :url="url" :columns="columns"/>
+          </v-list-item-content>
+          <v-alert v-else
+                   border="right"
+                   colored-border
+                   type="error"
+                   elevation="2"
+          >
+            You don't have any permission to view this section.
+          </v-alert>
+        </v-list-item>
+      </div>
+    </div>
+
+
+  </div>
 </template>
 
 <script>
@@ -65,7 +67,7 @@
           },
           {
             header: 'Full Name',
-            field: 'full_name',
+            field: 'first_name',
             type: 'string'
           },
           {

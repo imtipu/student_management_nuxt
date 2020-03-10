@@ -1,138 +1,143 @@
 <template>
   <div class="datatable-custom">
-    <v-list-item class="card-header">
-      <v-list-item-content>
-        Total: {{ json_data.count }} {{ server_status }}
-      </v-list-item-content>
-      <v-list-item-content>
-        <form class="ml-auto float-right" @submit="searchPost" style="max-width: 300px">
-          <v-text-field
-            label="Serach"
-            icon
-            read-only
-            solo
-            dense
+    <div class="table-header">
+      <div class="row">
+        <div class="col-12">
+          Total: {{ json_data.count }} {{ server_status }}
+        </div>
+        <div class="col-md-6">
+          <div class="float-left">
+            <form class="" @submit="searchPost" style="max-width: 300px">
+              <div class="form-group">
+                <input class="form-control" type="text" v-model="search" @keyup="searchPost"/>
+              </div>
 
-            v-model="search" @keyup="searchPost"
-          ></v-text-field>
+            </form>
 
-        </form>
-
-      </v-list-item-content>
-
-
-    </v-list-item>
-    <div class="card-body">
-      <div class="pagination"
-           v-if="json_data.total_pages > 1"
-      >
-        <ul class="" style="max-width: 500px; width: 100%">
-          <li class="page-item" :class="{ 'disabled' : json_data.previous === null}"
-              v-bind:style="[json_data.previous === null ? {'display': 'none' } : {}]">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   :icon="true"
-                   class="grey darken-4 white--text"
-                   @click="previousPage">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-          </li>
-          <li class="page-item" v-if="(json_data.current_page - 3) >= 1">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-
-                   @click="goToPage(json_data.current_page - 3)">{{
-              json_data.current_page - 3 }}
-            </v-btn>
-          </li>
-          <li class="page-item" v-if="(json_data.current_page - 2) >= 1">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-
-                   @click="goToPage(json_data.current_page - 2)">{{
-              json_data.current_page - 2 }}
-            </v-btn>
-          </li>
-          <li class="page-item" v-if="(json_data.current_page - 1) >= 1">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-
-                   @click="goToPage(json_data.current_page - 1)">{{ json_data.current_page - 1 }}
-            </v-btn>
-          </li>
-          <!--current page-->
-          <li class="page-item active" v-if="json_data.current_page">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   class="grey darken-4 white--text
-">{{ json_data.current_page }}
-            </v-btn>
-          </li>
-
-          <li class="page-item active" v-if="json_data.current_page === ''">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   class="grey darken-4 white--text
-">1
-            </v-btn>
-          </li>
-
-          <!--Next 3 pages-->
-          <li class="page-item" v-if="(json_data.current_page + 1) <= json_data.total_pages &&
-                    json_data.current_page !== ''">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   @click="goToPage(json_data.current_page + 1)">{{
-              json_data.current_page + 1 }}
-            </v-btn>
-          </li>
-          <li class="page-item" v-if="(json_data.current_page + 2) <= json_data.total_pages">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   @click="goToPage(json_data.current_page + 2)">{{
-              json_data.current_page + 2 }}
-            </v-btn>
-          </li>
-          <li class="page-item" v-if="(json_data.current_page + 3) <= json_data.total_pages">
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   @click="goToPage(json_data.current_page + 3)">{{
-              json_data.current_page + 3 }}
-            </v-btn>
-          </li>
-
-          <li class="page-item" :class="{ 'disabled' : json_data.next === null}"
-              v-bind:style="[json_data.next === null ? {'display': 'none' } : {}]"
+          </div>
+        </div>
+        <div class="col-md-6 text-right">
+          <div class="pagination text-right"
+               v-if="json_data.total_pages > 1"
           >
-            <v-btn rounded small
-                   :min-height="btnMinHeight"
-                   :min-width="btnMinWidth"
-                   :icon="true"
-                   class="grey darken-4 white--text"
-                   @click="nextPage">
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-          </li>
-        </ul>
+            <ul class="d-inline-block ml-auto r-0 w-auto" style="max-width: 500px; width: 100%">
+              <li class="page-item" :class="{ 'disabled' : json_data.previous === null}"
+                  v-bind:style="[json_data.previous === null ? {'display': 'none' } : {}]">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       :icon="true"
+                       class="grey darken-4 white--text"
+                       @click="previousPage">
+                  <i class="fas fa-chevron-left"></i>
+                </b-btn>
+              </li>
+              <li class="page-item" v-if="(json_data.current_page - 3) >= 1">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+
+                       @click="goToPage(json_data.current_page - 3)">{{
+                  json_data.current_page - 3 }}
+                </b-btn>
+              </li>
+              <li class="page-item" v-if="(json_data.current_page - 2) >= 1">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+
+                       @click="goToPage(json_data.current_page - 2)">{{
+                  json_data.current_page - 2 }}
+                </b-btn>
+              </li>
+              <li class="page-item" v-if="(json_data.current_page - 1) >= 1">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+
+                       @click="goToPage(json_data.current_page - 1)">{{ json_data.current_page - 1 }}
+                </b-btn>
+              </li>
+              <!--current page-->
+              <li class="page-item active" v-if="json_data.current_page">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       class="grey darken-4 white--text
+">{{ json_data.current_page }}
+                </b-btn>
+              </li>
+
+              <li class="page-item active" v-if="json_data.current_page === ''">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       class="grey darken-4 white--text
+">1
+                </b-btn>
+              </li>
+
+              <!--Next 3 pages-->
+              <li class="page-item" v-if="(json_data.current_page + 1) <= json_data.total_pages &&
+                    json_data.current_page !== ''">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       @click="goToPage(json_data.current_page + 1)">{{
+                  json_data.current_page + 1 }}
+                </b-btn>
+              </li>
+              <li class="page-item" v-if="(json_data.current_page + 2) <= json_data.total_pages">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       @click="goToPage(json_data.current_page + 2)">{{
+                  json_data.current_page + 2 }}
+                </b-btn>
+              </li>
+              <li class="page-item" v-if="(json_data.current_page + 3) <= json_data.total_pages">
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       @click="goToPage(json_data.current_page + 3)">{{
+                  json_data.current_page + 3 }}
+                </b-btn>
+              </li>
+
+              <li class="page-item" :class="{ 'disabled' : json_data.next === null}"
+                  v-bind:style="[json_data.next === null ? {'display': 'none' } : {}]"
+              >
+                <b-btn rounded small
+                       :min-height="btnMinHeight"
+                       :min-width="btnMinWidth"
+                       :icon="true"
+                       class="grey darken-4 white--text"
+                       @click="nextPage">
+                  <i class="fas fa-chevron-right"></i>
+                </b-btn>
+              </li>
+            </ul>
+          </div>
+
+        </div>
       </div>
 
-      <v-simple-table
-        fixed-header
-      >
+
+    </div>
+
+
+    <div class="table-box">
+      <table class="table">
         <template>
           <thead>
           <tr v-if="columns.length > 0">
-            <th class="text-left" v-for="column in columns" @click="sortingField(column.field)">{{ column
-              .header }}
+            <th class="text-left" v-for="column in columns"
+                @click="sortingField(column.field)">
+              {{ column.header }}
+              <div class="float-right" v-if="column.sorting === true">
+                <span class="fas fa-arrow-up" v-if="ordering === column.field"></span>
+                <span class="fas fa-arrow-down" v-if="ordering === '-' + column.field"></span>
+              </div>
             </th>
           </tr>
           </thead>
@@ -166,8 +171,7 @@
           </tr>
           </tbody>
         </template>
-      </v-simple-table>
-
+      </table>
     </div>
     <!--<datatable-view-modal-->
     <!--:url="main_url+modal_data.slug+'/'"-->
@@ -441,6 +445,10 @@
 </script>
 
 <style scoped lang="scss">
+  .card {
+    color: #fff;
+  }
+
   .pagination {
     width: 100%;
     display: inline-block;
